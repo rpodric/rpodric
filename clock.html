@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Count Up Timer</title>
+    <style>
+        :root {
+            --color-background: rgba(252, 252, 249, 1);
+            --color-text: rgba(19, 52, 59, 1);
+            --font-family-mono: "Berkeley Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-background: rgba(31, 33, 33, 1);
+                --color-text: rgba(245, 245, 245, 1);
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family-mono);
+            background-color: var(--color-background);
+            color: var(--color-text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .timer-container {
+            text-align: center;
+        }
+
+        .timer-display {
+            font-size: 96px;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            line-height: 1.2;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .timer-display .unit {
+            font-size: 0.75em;
+            font-weight: 400;
+        }
+
+        @media (max-width: 768px) {
+            .timer-display {
+                font-size: 48px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .timer-display {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="timer-container">
+        <div class="timer-display" id="timer">0D 0H 0M 0S</div>
+    </div>
+
+    <script>
+        // Set start date to November 1, 2025, 00:00:00 PST for demo
+        const startDate = new Date('2025-09-09T13:00:00-08:00');
+
+        function padZero(num) {
+            return String(num).padStart(2, '0');
+        }
+
+        function updateTimer() {
+            const now = new Date();
+            const elapsed = now - startDate;
+
+            // Calculate time components
+            const seconds = Math.floor(elapsed / 1000) % 60;
+            const minutes = Math.floor(elapsed / (1000 * 60)) % 60;
+            const hours = Math.floor(elapsed / (1000 * 60 * 60)) % 24;
+            const days = Math.floor(elapsed / (1000 * 60 * 60 * 24));
+
+            // Format and display with smaller unit labels
+            const display = `${days}<span class="unit">D</span>&thinsp;${padZero(hours)}<span class="unit">H</span>&thinsp;${padZero(minutes)}<span class="unit">M</span>&thinsp;${padZero(seconds)}<span class="unit">S</span>`;
+            document.getElementById('timer').innerHTML = display;
+        }
+
+        // Update immediately and then every second
+        updateTimer();
+        setInterval(updateTimer, 1000);
+    </script>
+</body>
+</html>
+
