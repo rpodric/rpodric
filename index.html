@@ -48,9 +48,13 @@
         }
 
         .timer-display .unit {
-            font-size: 0.75em;
+            font-size: 0.80em;
             font-weight: 400;
         }
+        
+	      .timer-display .unit:not(:last-child) {
+ 	   				 margin-right: -0.3em;
+			  }
 
         @media (max-width: 768px) {
             .timer-display {
@@ -99,4 +103,3 @@
     </script>
 </body>
 </html>
-
